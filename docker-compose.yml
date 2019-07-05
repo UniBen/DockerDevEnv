@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+  parallax:
+    image: jwilder/nginx-proxy
+    environment:
+      - VIRTUAL_HOST=proxy.local.parallax.dev
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - .certs/:/etc/nginx/certs
+  whoami:
+    image: jwilder/whoami
+    environment:
+      - VIRTUAL_HOST=whoami.local.parallax.dev
+networks:
+  default:
+    external:
+      name: parallax
