@@ -1,3 +1,6 @@
+# Place this file in the root of your project and rename to docker-compose.yml
+# or run using docker-compose -f docker-compose.example.yml
+#
 # REPLACE <name> WITH YOUR PROJECT NAME
 
 version: '3.7'

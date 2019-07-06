@@ -1,0 +1,31 @@
+# Place this file in the root of your project and rename to docker-compose.yml
+# or run using docker-compose -f docker-compose.parallax.example.yml
+#
+
+version: '3.7'
+
+services:
+  app:
+    build:
+      context: k8s/docker
+      dockerfile: dev
+    volumes:
+      - .:/src:rw,cached
+    expose:
+      - 80
+    environment:
+      - VIRTUAL_HOST=homegroup.local.parallax.dev
+      - CERT_NAME=local.parallax.dev
+      - SITE_NAME=homegroup
+      - SITE_BRANCH=master
+      - ENVIRONMENT=local
+      - DISABLE_OPCACHE="true"
+      - DISABLE_CRON="true"
+    working_dir: /src
+volumes:
+  app-sync:
+    external: true
+networks:
+  default:
+    external:
+      name: parallax-proxy

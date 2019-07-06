@@ -3,6 +3,7 @@ version: '3.7'
 services:
   parallax:
     image: jwilder/nginx-proxy
+    restart: always
     environment:
       - VIRTUAL_HOST=proxy.local.parallax.dev
     ports:
@@ -11,10 +12,23 @@ services:
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - .certs/:/etc/nginx/certs
+  parallax-db:
+    image: mysql:5.7.22
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      - VIRTUAL_HOST=database.local.parallax.dev
+      - VIRTUAL_PORT=3306
+      - MYSQL_ROOT_PASSWORD=parallax
+    volumes:
+      - db-data:/var/lib/mysql
   whoami:
     image: jwilder/whoami
     environment:
       - VIRTUAL_HOST=whoami.local.parallax.dev
+volumes:
+  db-data:
 networks:
   default:
     external:
