@@ -8,15 +8,15 @@ services:
   app:
     build:
       context: k8s/docker
-      dockerfile: dev
+      dockerfile: nginx-php
     volumes:
       - .:/src:rw,cached
     expose:
       - 80
     environment:
-      - VIRTUAL_HOST=homegroup.local.parallax.dev
+      - VIRTUAL_HOST=parallax-example.local.parallax.dev
       - CERT_NAME=local.parallax.dev
-      - SITE_NAME=homegroup
+      - SITE_NAME=parallax-test
       - SITE_BRANCH=master
       - ENVIRONMENT=local
       - DISABLE_OPCACHE="true"

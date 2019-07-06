@@ -12,7 +12,7 @@ services:
         expose:
             - 80
         environment:
-            - VIRTUAL_HOST=<name>.local.parallax.dev
+            - VIRTUAL_HOST=base-example.local.parallax.dev
             - CERT_NAME=local.parallax.dev
         volumes:
             - ./src:/src/:rw,cached
@@ -32,7 +32,7 @@ services:
             - VIRTUAL_PROTO=fastcgi
         volumes:
             - ./src:/src/:rw,cached
-            - ./etc/php.ini:/usr/local/etc/php/conf.d/00_<name>=0.ini:ro
+            - ./etc/php.ini:/usr/local/etc/php/conf.d/00_base-example.ini:ro
         env_file:
             - ./.env
         depends_on:
