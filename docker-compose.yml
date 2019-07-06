@@ -26,7 +26,7 @@ services:
   whoami:
     image: jwilder/whoami
     environment:
-      - VIRTUAL_HOST=whoami.local.parallax.dev
+      - VIRTUAL_HOST=*.whoami.local.parallax.dev
 volumes:
   db-data:
 networks:
