@@ -2,7 +2,7 @@
 SHELL := /bin/bash
 
 include .env
-export $(shell sed 's/=.*//' e.nv)
+export $(shell sed 's/=.*//' .env)
 
 install:
 	brew install mkcert
