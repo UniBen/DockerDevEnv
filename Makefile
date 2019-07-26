@@ -1,14 +1,20 @@
+#!make
+SHELL := /bin/bash
+
+include .env
+export $(shell sed 's/=.*//' .env)
+
 install:
 	brew install mkcert
 	brew install nss
 	brew install dnsmasq
-	sudo echo 'address=/local.parallax.dev/127.0.0.1' >> /usr/local/etc/dnsmasq.conf
+	sudo echo 'address=/$(PROXY_DOMAIN)/127.0.0.1' >> /usr/local/etc/dnsmasq.conf
 	sudo mkdir -p /etc/resolver
-	echo 'nameserver 127.0.0.1' | sudo tee /etc/resolver/local.parallax.dev
+	echo 'nameserver 127.0.0.1' | sudo tee /etc/resolver/$(PROXY_DOMAIN)
 	sudo brew services restart dnsmasq
-	mkcert "*.local.parallax.dev" "*.ide.local.parallax.dev"
-	mv _wildcard.local.parallax.dev+1.pem ./.certs/local.parallax.dev.crt
-	mv _wildcard.local.parallax.dev+1-key.pem ./.certs/local.parallax.dev.key
+	mkcert "*.$(PROXY_DOMAIN)" "*.ide.$(PROXY_DOMAIN)"
+	mv _wildcard.$(PROXY_DOMAIN)+1.pem ./.certs/$(PROXY_DOMAIN).crt
+	mv _wildcard.$(PROXY_DOMAIN)+1-key.pem ./.certs/$(PROXY_DOMAIN).key
 	docker network create parallax-proxy
 	echo "Please restart your computer."
 

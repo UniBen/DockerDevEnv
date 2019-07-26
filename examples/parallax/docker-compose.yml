@@ -4,9 +4,7 @@ version: '3.7'
 
 services:
   app:
-    build:
-      context: k8s/docker
-      dockerfile: nginx-php
+    image: prlx/prlx-nginx-php-fpm:7.3-master
     volumes:
       - .:/src:rw,cached
     expose:
@@ -22,12 +20,10 @@ services:
     working_dir: /src
   ide:
     image: theiaide/theia:next
+    ports:
+      - 3000:3000
     volumes:
-    - .:/home/project:rw,delegated
-    environment:
-    - VIRTUAL_HOST=<name>.ide.local.parallax.dev
-    - VIRTUAL_PORT=3000
-    - CERT_NAME=local.parallax.dev
+      - .:/home/project:cached
 volumes:
   app-sync:
     external: true
