@@ -6,9 +6,9 @@ install:
 	sudo mkdir -p /etc/resolver
 	echo 'nameserver 127.0.0.1' | sudo tee /etc/resolver/local.parallax.dev
 	sudo brew services restart dnsmasq
-	mkcert "*.local.parallax.dev"
-	mv _wildcard.local.parallax.dev.pem ./.certs/local.parallax.dev.crt
-	mv _wildcard.local.parallax.dev-key.pem ./.certs/local.parallax.dev.key
+	mkcert "*.local.parallax.dev" "*.ide.local.parallax.dev"
+	mv _wildcard.local.parallax.dev+1.pem ./.certs/local.parallax.dev.crt
+	mv _wildcard.local.parallax.dev+1-key.pem ./.certs/local.parallax.dev.key
 	docker network create parallax-proxy
 	echo "Please restart your computer."
 

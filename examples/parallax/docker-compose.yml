@@ -1,7 +1,5 @@
-# Place this file in the root of your project and rename to docker-compose.yml
-# or run using docker-compose -f docker-compose.parallax.example.yml
-#
-
+# Place this file in your projects root.
+# Reember to replace <name> with your project name.
 version: '3.7'
 
 services:
@@ -14,14 +12,22 @@ services:
     expose:
       - 80
     environment:
-      - VIRTUAL_HOST=parallax-example.local.parallax.dev
+      - VIRTUAL_HOST=<name>.local.parallax.dev
       - CERT_NAME=local.parallax.dev
-      - SITE_NAME=parallax-test
+      - SITE_NAME=<name>
       - SITE_BRANCH=master
       - ENVIRONMENT=local
       - DISABLE_OPCACHE="true"
       - DISABLE_CRON="true"
     working_dir: /src
+  ide:
+    image: theiaide/theia:next
+    volumes:
+    - .:/home/project:rw,delegated
+    environment:
+    - VIRTUAL_HOST=<name>.ide.local.parallax.dev
+    - VIRTUAL_PORT=3000
+    - CERT_NAME=local.parallax.dev
 volumes:
   app-sync:
     external: true
