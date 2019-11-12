@@ -1,0 +1,53 @@
+version: '3.7'
+
+services:
+  proxy:
+    image: jwilder/nginx-proxy
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    labels:
+      - 'com.github.jrcs.letsencrypt_nginx_proxy_companion.docker_gen'
+      - 'com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy'
+    volumes:
+      - '/var/run/docker.sock:/tmp/docker.sock:ro'
+      - '.certs/:/etc/nginx/certs'
+      - 'proxy:/etc/nginx/vhost.d'
+      - 'proxy:/usr/share/nginx/html'
+      - 'proxy:/etc/nginx'
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    depends_on:
+      - proxy
+    environment:
+      - 'DEFAULT_EMAIL=ben@blwatson.com'
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock:ro'
+      - '.certs/:/etc/nginx/certs'
+      - 'proxy:/etc/nginx/vhost.d'
+      - 'proxy:/usr/share/nginx/html'
+      - 'proxy:/etc/nginx'
+  proxy-db:
+    image: mysql:5.7
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      - 'VIRTUAL_HOST=database.$PROXY_DOMAIN'
+      - 'VIRTUAL_PORT=3306'
+      - 'MYSQL_ROOT_PASSWORD=root'
+    volumes:
+      - 'db-data:/var/lib/mysql'
+  whoami:
+    image: jwilder/whoami
+    environment:
+      - 'VIRTUAL_HOST=whoami.$PROXY_DOMAIN'
+      - 'LETSENCRYPT_HOST=whoami.$PROXY_DOMAIN'
+volumes:
+  db-data:
+  proxy:
+networks:
+  default:
+    external:
+      name: parallax-proxy

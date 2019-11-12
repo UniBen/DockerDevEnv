@@ -1,6 +1,6 @@
 version: '3.7'
 services:
-  parallax:
+  proxy:
     image: jwilder/nginx-proxy
     restart: always
     ports:
@@ -9,7 +9,7 @@ services:
     volumes:
       - '/var/run/docker.sock:/tmp/docker.sock:ro'
       - '.certs/:/etc/nginx/certs'
-  parallax-db:
+  proxy-db:
     image: 'mysql:5.7.22'
     restart: always
     ports:
@@ -17,7 +17,7 @@ services:
     environment:
       - VIRTUAL_HOST=database.$PROXY_DOMAIN
       - VIRTUAL_PORT=3306
-      - MYSQL_ROOT_PASSWORD=parallax
+      - MYSQL_ROOT_PASSWORD=root
     volumes:
       - 'db-data:/var/lib/mysql'
   whoami:
@@ -29,4 +29,4 @@ volumes:
 networks:
   default:
     external:
-      name: parallax-proxy
+      name: proxy-proxy
