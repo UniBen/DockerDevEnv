@@ -1,4 +1,5 @@
 version: '3.7'
+
 services:
   proxy:
     image: jwilder/nginx-proxy
@@ -7,9 +8,10 @@ services:
       - '80:80'
       - '443:443'
     volumes:
-      - '/var/run/docker.sock:/tmp/docker.sock:ro'
-      - '.certs/:/etc/nginx/certs'
-  proxy-db:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./proxy.conf:/etc/nginx/proxy.conf
+      - .certs/:/etc/nginx/certs
+  parallax-db:
     image: 'mysql:5.7.22'
     restart: always
     ports:

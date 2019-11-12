@@ -1,3 +1,5 @@
+# Place this file in your projects root.
+# Reember to replace <name> with your project name.
 version: '3.7'
 
 services:
