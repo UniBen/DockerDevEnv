@@ -13,10 +13,8 @@ services:
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./proxy.conf:/etc/nginx/proxy.conf
-      - .certs/:/etc/nginx/certs
+      - .certs/:/etc/nginx/certs:ro
       - proxy:/etc/nginx/vhost.d
-      - proxy:/usr/share/nginx/html
-      - proxy:/etc/nginx
   letsencrypt:
     image: jrcs/letsencrypt-nginx-proxy-companion
     depends_on:
@@ -28,8 +26,6 @@ services:
       - ./proxy.conf:/etc/nginx/proxy.conf
       - .certs/:/etc/nginx/certs
       - proxy:/etc/nginx/vhost.d
-      - proxy:/usr/share/nginx/html
-      - proxy:/etc/nginx
   proxy-db:
     image: mysql:5.7
     restart: always
