@@ -11,7 +11,7 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./proxy.conf:/etc/nginx/proxy.conf
       - .certs/:/etc/nginx/certs
-  parallax-db:
+  proxy-db:
     image: 'mysql:5.7.22'
     restart: always
     ports:
