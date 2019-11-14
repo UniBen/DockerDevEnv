@@ -15,7 +15,7 @@ install:
 	mkcert "*.$(PROXY_DOMAIN)" "*.ide.$(PROXY_DOMAIN)"
 	mv _wildcard.$(PROXY_DOMAIN)+1.pem ./.certs/$(PROXY_DOMAIN).crt
 	mv _wildcard.$(PROXY_DOMAIN)+1-key.pem ./.certs/$(PROXY_DOMAIN).key
-	docker network create parallax-proxy
+	docker network create $(PROXY_NETWORK)
 	echo "Please restart your computer."
 
 start:
