@@ -3,6 +3,8 @@ Docker Dev Env
 
 Allow for any docker-compose project to be accessible via a https host.
 
+Note: This only works for mac at the moment.
+
 ## Connecting to the database
 
 ### Connection to the proxy-wide database within the container
